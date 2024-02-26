@@ -7,7 +7,6 @@ while True:
        print("Veuillez saisir une année correcte!")
 annee = int(annee)
 
-
 #Mois
 while True:
    mois = input("Fournir un mois: ")
