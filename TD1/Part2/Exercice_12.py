@@ -29,11 +29,11 @@ jours = int(jours)
 
 #Jours
 while True:
-   N = input("Fournir un jour: ")
+   N = input("Fournir le nombre de jours en arrière: ")
    if 0 < N.isdigit():
        break
    else:
-       print("Veuillez saisir un jour correcte!")
+       print("Veuillez saisir un nombre correcte!")
 N = int(N)
 
 # Liste des mois avec 31 jours
