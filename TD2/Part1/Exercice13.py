@@ -3,6 +3,8 @@ nombre = int(input("Veuillez sasisir un nombre: "))
 #initialisation des variables
 premier = 0; entiers = 0 ; i =0
 liste_premiers = []
+
+#Chercher les nombres premiers et les entiers non premiers
 while nombre != 0:
     nombre = int(input("Veuillez sasisir un nombre: "))
     entiers =+ 1
@@ -13,6 +15,7 @@ while nombre != 0:
             premier += 1
             liste_premiers.append(nombre)
 
+#Afficher les resultats
 print(f"la liste des nombres premiers saisis :{liste_premiers}\n"
       f"le nombre de nombre premiers saisis: {premier}"
       f"\nLe nombre d'entiers saisis {entiers}")
