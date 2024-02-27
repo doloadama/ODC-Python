@@ -1,7 +1,5 @@
-text = 'Hello World'
-alphabet= "abcdefghijklmnopqrstuvwxyz"
+class Voiture:
 
-print(alphabet.find(text[0]))
+  définition des attributs et méthodes de Voiture
 
-alphabet.upper()
-print(alphabet)
+ma_voiture = Voiture() # ma_voiture est un objet Voiture
