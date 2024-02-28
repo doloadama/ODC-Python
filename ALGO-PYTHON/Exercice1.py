@@ -17,14 +17,18 @@ else:
   exit()
 
 #Affichage du tableau
-for i in range(0, 11, 3):
+#Affichage de la première ligne
+for i in range(0, 10, 3):
   print(f"{mois[i]:10}", end ="\t")
 print()
 
+#Affichage de la deuxième ligne
 for i in range(1, 12, 3):
   print(f"{mois[i]:10}", end ="\t")
 print()
+k = 2
 
+#Affichage de la troisième ligne
 for i in range(2, 12, 3):
   print(f"{mois[i]:10}", end ="\t")
 print()

@@ -1,11 +1,13 @@
 #Demander de donner une phrase
-phrase = input("Ecrivez une phrase: ")
+phrases = input("Ecrivez une phrase: ")
+phraseN = ""
 
 #Parcourir la chaine
-for i in range(len(phrase)-1):
-    #Si deux espaces se suivent
-    if phrase[i] == " " and phrase[i + 1]== " ":
-         # Supprimer l'espace en trop
-        phrase = phrase[:i] + phrase[i + 1:]
+for i in phrases:
+        if i == " " and  k:
+            continue
+        else:
+            phraseN += i
+            k = (i == " ") #mets à jour k en vérifiant si i == " " et met true
 
-print(phrase)
+print(phrases)

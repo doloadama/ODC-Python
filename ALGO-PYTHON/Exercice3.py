@@ -6,25 +6,43 @@ while True:
     else:
         print("Donnez un nombre correcte!!!!")
 N = int(N)
+
 #Initialisations
-speciaux = "#$%&/()"
+speciaux = "#$%&/()@+-×÷"; k = False ; phraseN = ""
 
 #Recevoir les phrases
-while True:
+for un in range(N):
+
     phrases = input("Entrez une phrase \n > ")
+
     #Vérification de la majuscule et du point
-    if phrases[0].islower() or phrases[-1] != ".":
-        print("phrase incorrecte")
-    #Vérification des caractères spéciaux
-    for i in range(len(speciaux) - 1):
-        for j in range(len(phrases)-1):
-            if speciaux[i] == phrases[j]:
-                print("La phrase n'est pas correct")
-            else:
-                continue
+    while True:
+        if not phrases[0].isupper() or phrases[-1] != ".":
+            print("Une phrase commence par une lettre majuscule et se termine par un point.")
+            phrases = input("Entrez une phrase \n > ")
+        else:
+            break 
+    
     #Suppression de l'espace
-    for i in range(len(phrases)-1):
-    #Si deux espaces se suivent
-        if phrases[i] == " " and phrases[i + 1]== " ":
-            # Supprimer l'espace en trop
-            phrases = phrases[:i] + phrases[i + 1:]
+        for caractere in speciaux:
+            if caractere in phrases:
+                print("La phrase ne doit pas contenir de caractères spéciaux.", end=" \n")
+                phrases = input("Entrez une phrase \n > ")
+            else:
+                break
+
+    while True:
+        if len(phrases) < 25:
+            print("La phrase doit avoir au moins 25 caractères")
+            input("Entrez une phrase \n > ")
+        else:
+            break
+    
+    #Suppression espacements
+    for i in phrases:
+        if i == " " and  k:
+            continue
+        else:
+            phraseN += i
+            k = (i == " ") #mets à jour k en vérifiant si i == " " et met true
+print(phraseN)
