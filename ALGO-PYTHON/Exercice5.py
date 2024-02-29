@@ -53,6 +53,3 @@ secondaire = []
 for i in range(ordre):
     principale.append(matrice[i][i])  # Élément de la diagonale principale
     secondaire.append(matrice[i][ordre - 1 - i])  # Élément de la diagonale secondaire
-
-print(principale)
-print(secondaire)
