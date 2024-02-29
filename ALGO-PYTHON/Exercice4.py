@@ -1,3 +1,8 @@
+
+
+
+
+
 #Demander de donner le nombre de phrases
 while True:
     N = input("Donner le nombre de numéros à saisir \n> ")
@@ -16,7 +21,9 @@ taille = 0 #Recupère la taille du numéro aprés retrait ou non des espaces
 #Saisie des numéros
 for i in range(N):
     numb = input("Saisir un numéro: \n>")
+    numb = numb.strip()
     debutNumero = numb[:2]
+    
     #Vérifier les deux premiers digits
     # Vérifier les deux premiers chiffres
     if debutNumero in commence and len(numb.replace(" ", "")) == 9:

@@ -4,7 +4,7 @@ phraseN = ""
 k =False
 #Parcourir la chaine
 for i in phrases:
-        if i == " " and  k:
+        if i == " " :
             continue
         else:
             phraseN += i
