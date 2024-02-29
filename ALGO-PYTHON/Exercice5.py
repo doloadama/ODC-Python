@@ -1,5 +1,5 @@
 import random
-
+from colorama import init, Fore, Style
 # Demander à l'utilisateur de saisir l'ordre de la matrice
 while True:
     ordre = input("Entrez l'ordre de la matrice carrée : ")
@@ -43,10 +43,16 @@ for i in range(ordre):
         ligne.append(nombre_aleatoire)
     matrice.append(ligne)
 
-# Afficher la matrice
-print("Matrice carrée remplie avec des nombres aléatoires :")
-for row in matrice:
-    print(row)
-
 #Determination des diagonales
 #Initialisations des variables représentants les diagonales
+print (matrice)
+
+principale = []
+secondaire = []
+
+for i in range(ordre):
+    principale.append(matrice[i][i])  # Élément de la diagonale principale
+    secondaire.append(matrice[i][ordre - 1 - i])  # Élément de la diagonale secondaire
+
+print(principale)
+print(secondaire)

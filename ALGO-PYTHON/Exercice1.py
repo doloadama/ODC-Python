@@ -7,20 +7,21 @@ mois_en = ["January", "February", "March", "April", "May", "June", "July", "Augu
 print("Voulez-vous afficher les mois en Français (F) ou en Anglais (A) ?")
 choix = input("> ").upper()
 
+mois = []
 #Verifier le choix
 if choix == "F":
   mois = mois_fr
 elif choix == "A":
   mois = mois_en
 else:
-  print("Choix invalide")
-  exit()
+  mois = mois_fr
 
 #Affichage du tableau
 #Affichage de la première ligne
-for i in range(0, 10, 3):
+for i in range(0, 12, 3):
   print(f"{mois[i]:10}", end ="\t")
 print()
+k = 2
 
 #Affichage de la deuxième ligne
 for i in range(1, 12, 3):

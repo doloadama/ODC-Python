@@ -1,8 +1,3 @@
-
-
-
-
-
 #Demander de donner le nombre de phrases
 while True:
     N = input("Donner le nombre de numéros à saisir \n> ")
