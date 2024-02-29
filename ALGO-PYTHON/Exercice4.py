@@ -16,28 +16,17 @@ taille = 0 #Recupère la taille du numéro aprés retrait ou non des espaces
 #Saisie des numéros
 for i in range(N):
     numb = input("Saisir un numéro: \n>")
-    debutNuméro = numb[:1]
-
+    debutNumero = numb[:2]
     #Vérifier les deux premiers digits
-    if debutNuméro in commence:
+    # Vérifier les deux premiers chiffres
+    if debutNumero in commence and len(numb.replace(" ", "")) == 9:
         valide += numb
         print("Numéro correct")
     else:
         invalide += numb
         print("Numéro incorrect")
 
-    #Verifier la longueur du numéro
-    for j in range(len(numb)):
-            #Pour chaque espace 
-            if " " in numb:
-                taille = len(numb) - 1
-                continue
-    #veirfier si la taille après retrait des espaces est de 9
-    if taille == 9:
-        valide += numb
-        print(f"{valide:10}", end = "\t")
-        print()
-    else:
-        invalide += numb
-        print(f"{invalide:10}", end = "\t")
-        print()
+# Afficher les numéros valides à gauche et les numéros invalides à droite
+print("\nNuméros valides :\t\t\tNuméros invalides :")
+for val, inval in zip(valide, invalide):
+    print(f"{val:25}\t\t\t{inval:25}")
