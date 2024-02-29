@@ -1,5 +1,5 @@
-import random
-from colorama import init, Fore, Style
+import random #Gère la génération d'éléments de la matrice
+from colorama import init, Fore, Style #Bibliothèque de gestion des couleurs
 # Demander à l'utilisateur de saisir l'ordre de la matrice
 while True:
     ordre = input("Entrez l'ordre de la matrice carrée : ")
@@ -43,13 +43,65 @@ for i in range(ordre):
         ligne.append(nombre_aleatoire)
     matrice.append(ligne)
 
+#Affichage de la matrice
+def afficher_matrice(matrice):
+    for ligne in matrice:
+        for element in ligne:
+            print(element, end=' ')
+        print() 
+
 #Determination des diagonales
 #Initialisations des variables représentants les diagonales
-print (matrice)
+print(f" ---------------------------------------------Voici la matrice-------------------------------------------\n {afficher_matrice(matrice)}")
 
 principale = []
 secondaire = []
 
+#Recherche des éléments de la diagonale principale et secondaire 
 for i in range(ordre):
     principale.append(matrice[i][i])  # Élément de la diagonale principale
     secondaire.append(matrice[i][ordre - 1 - i])  # Élément de la diagonale secondaire
+
+
+"""Récupération des éléments suivants le premier élement sur
+ la même ligne de la diagonale principale"""
+suivants = [matrice[0][i+1] for i in range(ordre-1)]
+
+
+"""Récupération des éléments précedants dernier élement sur
+ la même ligne de la diagonale principale"""
+precedants = [matrice[ordre-1][i] for i in range(ordre - 2, -1, -1)]
+
+
+#Gestion de la coloration
+# Initialiser colorama pour prendre en charge l'affichage des couleurs dans la console
+init()
+
+def afficher_liste_bleue(liste):
+    for element in liste:
+        # Imprimer l'élément en bleu
+        print(Fore.BLUE + str(element), end=' ')
+    # Réinitialiser les paramètres de couleur à la fin de l'impression de la liste
+    return(Style.RESET_ALL)
+
+def afficher_liste_rouge(liste):
+    for element in liste:
+        # Imprimer l'élément en bleu
+        print(Fore.RED + str(element), end=' ')
+    # Réinitialiser les paramètres de couleur à la fin de l'impression de la liste
+    return (Style.RESET_ALL)
+
+if couleur == "bleu":
+    if position == "HAUT":
+        print("Les éléments choisis sont là et hop: \n")
+        print(afficher_liste_bleue(suivants))
+    else:
+        print("Les éléments choisis sont là et hop: \n")
+        print(afficher_liste_bleue(precedants))
+else:
+    if position == "HAUT":
+        print("Les éléments choisis sont là et hop: \n")
+        print(afficher_liste_rouge(suivants))
+    else:
+        print("Les éléments choisis sont là et hop: \n")
+        print(afficher_liste_rouge(precedants))
