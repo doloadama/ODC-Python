@@ -16,7 +16,7 @@ taille = 0 #Recupère la taille du numéro aprés retrait ou non des espaces
 #Saisie des numéros
 for i in range(N):
     numb = input("Saisir un numéro: \n>")
-    debutNuméro = numb[:2]
+    debutNuméro = numb[:1]
 
     #Vérifier les deux premiers digits
     if debutNuméro in commence:

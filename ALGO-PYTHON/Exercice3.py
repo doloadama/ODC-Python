@@ -8,12 +8,19 @@ while True:
 N = int(N)
 
 #Initialisations
-speciaux = "#$%&/()@+-×÷"; k = False ; phraseN = ""
+speciaux = ["#$%&/()@+-×÷"]; k = False ; phraseN = ""
 
 #Recevoir les phrases
 for un in range(N):
-
+    #Inserer une phrase
     phrases = input("Entrez une phrase \n > ")
+    #Gestion des caractères spéciaux
+    for caractere in speciaux:
+            if caractere in phrases:
+                    print("La phrase ne doit pas contenir de caractères spéciaux.", end=" \n")
+                    phrases = input("Entrez une phrase \n > ")
+            else:
+                    break
 
     #Vérification de la majuscule et du point
     while True:
@@ -23,15 +30,9 @@ for un in range(N):
         else:
             break 
     
-    #Suppression de l'espace
-        for caractere in speciaux:
-            if caractere in phrases:
-                print("La phrase ne doit pas contenir de caractères spéciaux.", end=" \n")
-                phrases = input("Entrez une phrase \n > ")
-            else:
-                break
+   
 
-    while True:
+    #Gestion de la longueur de la chaîne
         if len(phrases) < 25:
             print("La phrase doit avoir au moins 25 caractères")
             input("Entrez une phrase \n > ")
@@ -40,9 +41,10 @@ for un in range(N):
     
     #Suppression espacements
     for i in phrases:
-        if i == " " and  k:
-            continue
-        else:
-            phraseN += i
-            k = (i == " ") #mets à jour k en vérifiant si i == " " et met true
-print(phraseN)
+            if i == " " and  k:
+                continue
+            else:
+                phraseN += i
+                k = (i == " ") #mets à jour k en vérifiant si i == " " et met true
+
+    print(phraseN, end="\n")
