@@ -3,6 +3,7 @@ def numero():
     commence = {"77", "78", "76", "70", "75"}  # Contient les dépendances de début de numéro
     while True:
         telephone = input("Entrez le numéro de téléphone de l'étudiant: ")
+        telephone = telephone.strip()
         #Extraire les deux premiers chiffres du numéro
         debutNumero = telephone[:2]
         # Vérifier si la longueur du numéro est correcte
