@@ -26,8 +26,7 @@ while True:
         etudiant = rechercher_etudiant(critere)
         if etudiant:
             print("Étudiant trouvé :")
-            print(f"Nom : {etudiant['nom']}, Prénom : {etudiant['prenom']},
-                   Classe : {etudiant['classe']}, Téléphone : {etudiant['tel']}")
+            print(f"Nom : {etudiant['nom']}, Prénom : {etudiant['prenom']}, Classe : {etudiant['classe']}, Téléphone : {etudiant['tel']}")
         else:
             print("Aucun étudiant trouvé.")
     elif choix == "5":
