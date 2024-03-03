@@ -22,6 +22,7 @@ def numero(numb):
 #--------------------------------------------------------------------------------------------------------
 #Création étudiant
 def saisir_info_etudiant():
+    etudiant = {}
     prenom = input("Entrez le prénom de l'étudiant: ")
     nom = input("Entrez le nom de l'étudiant: ")
     telephone = input("Entrez le numéro de téléphone de l'étudiant: ")
@@ -55,6 +56,6 @@ def saisir_info_etudiant():
             print("La note doit être un chiffre, veuillez reessayer")
     note_examen = float(note_examen)
     
-    return prenom, nom, telephone, classe, note_devoir, note_projet, note_examen
+    etudiant = {"prenom":prenom, "nom":nom, "telephone":telephone, "classe":classe,
+                    "note_devoir":note_devoir, "note_projet":note_projet, "note-exam":note_examen}
 
-print(saisir_info_etudiant())
