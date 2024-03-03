@@ -1,31 +1,25 @@
-def numero(numb):
+def numero():
     # Gestion des numéros de téléphone valides
     commence = {"77", "78", "76", "70", "75"}  # Contient les dépendances de début de numéro
-
-    # Supprimer les espaces inutiles dans le numéro
-    numb = numb.replace(" ", "")
-
-    # Vérifier si la longueur du numéro est correcte
-    if len(numb) == 9:
-        # Extraire les deux premiers chiffres du numéro
-        debutNumero = numb[:2]
-        # Vérifier si les deux premiers chiffres sont valides
-        if debutNumero in commence:
-            # Retourner le numéro valide
-            return numb
+    while True:
+        telephone = input("Entrez le numéro de téléphone de l'étudiant: ")
+        #Extraire les deux premiers chiffres du numéro
+        debutNumero = telephone[:2]
+        # Vérifier si la longueur du numéro est correcte
+        if len(telephone) == 9 and debutNumero in commence:
+            # Vérifier si les deux premiers chiffres sont valides
+                return telephone
+                break
         else:
-            # Retourner un message d'erreur si les deux premiers chiffres ne sont pas valides
-            return "Numéro incorrect: les deux premiers chiffres ne sont pas valides"
-    else:
-        # Retourner un message d'erreur si la longueur du numéro est incorrecte
-        return "Numéro incorrect: la longueur du numéro doit être de 9 chiffres"
+                # Retourner un message d'erreur si les deux premiers chiffres ne sont pas valides
+                return "Numéro incorrect: les deux premiers chiffres ne sont pas valides"
+        
 #--------------------------------------------------------------------------------------------------------
 #Création étudiant
 def saisir_info_etudiant():
     etudiant = {}
     prenom = input("Entrez le prénom de l'étudiant: ")
     nom = input("Entrez le nom de l'étudiant: ")
-    telephone = input("Entrez le numéro de téléphone de l'étudiant: ")
     telephone = numero(telephone)
     classe = input("Entrez la classe de l'étudiant: ")
 
