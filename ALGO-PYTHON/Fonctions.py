@@ -1,5 +1,22 @@
 etudiants = []
 
+#Création d'une fonction de gestion de la saisie de numéros de téléphone
+def number():
+    while True:
+        commence = ["77","78","76","70","75"] #Contient les dépendances de début de numéro
+        numb = input("Saisir un numéro: \n>")
+        numb = numb.strip()
+        #Vérifier les deux premiers digitst
+        debutNumero = numb[:2]
+        # Vérifier les deux premiers chiffres
+        if debutNumero in commence and len(numb.replace(" ", "")) == 9:
+            valide += numb
+            print("Numéro correct")
+        else:
+            invalide += numb
+            return("Numéro incorrect")
+
+
 #Création d'une fonction devant gérer la saisie des informations d'un étudiant
 def saisie_etudiant():
     nom = input("Nom de l'étudiant : ")
