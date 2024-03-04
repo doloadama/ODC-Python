@@ -26,6 +26,7 @@ for i in range(N):
         print("Numéro correct")
     else:
         invalide += numb
+    
         print("Numéro incorrect")
 
 # Afficher les numéros valides à gauche et les numéros invalides à droite
