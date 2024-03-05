@@ -25,7 +25,7 @@ def saisie_etudiant():
         classe = input("Classe de l'étudiant : ")
         telephone = input("Téléphone de l'étudiant : ")
         
-        if not number(telephone):
+        if not number(telephone) and not telephone.isdigit():
             print("Format de numéro incorrect. Veuillez réessayer.")
             continue
         
@@ -84,12 +84,25 @@ def menu():
         print("6. Quitter")
 
         choix = input("Entrez votre choix : ")
+
         if choix == "1":
             saisie_etudiant()
         elif choix == "2":
             afficher_etudiants()
         elif choix == "3":
-            affichage_recherche()
+            critere = input("Entrez le critère de recherche (téléphone, nom, prénom ou classe) : ").lower()
+            valeur = input("Entrez la valeur à rechercher : ")
+            # Appel de la fonction de recherche avec les critères spécifiés
+            resultats_recherche = rechercher_etudiant_critere(critere, valeur)
+            if resultats_recherche:
+                print("\nRésultats de la recherche :")
+                for etudiant in resultats_recherche:
+                    print(etudiant)  # Affichage des informations de chaque étudiant trouvé
+            else:
+                print("Aucun résultat trouvé pour la recherche spécifiée.")  # Message si aucun étudiant n'est trouvé
+        elif choix == "4":
+            trier_par_la_moyenne("donnees_etudiant.txt")
+            afficher_etudiants()
         elif choix == "6":
             break
         else:
@@ -114,7 +127,6 @@ def rechercher_etudiant_critere(critere, valeur):
         for ligne in fichier:
             # Extraire les informations de l'étudiant de la ligne et les stocker dans des variables
             prenom, nom, classe, telephone, devoir, projet, examen, moyenne = ligne.strip().split("|")
-            
             # Vérifier si la valeur du critère spécifié correspond à la valeur recherchée
             if critere == "telephone" and valeur == telephone:
                 # Si c'est le cas, ajouter les informations de l'étudiant à la liste des étudiants trouvés
@@ -139,3 +151,25 @@ def affichage_recherche():
             print(etudiant)  # Affichage des informations de chaque étudiant trouvé
     else:
         print("Aucun résultat trouvé pour la recherche spécifiée.")  # Message si aucun étudiant n'est trouvé
+
+def trier_par_la_moyenne(nom_fichier):
+    """
+    Fonction pour trier les lignes d'un fichier selon la moyenne des étudiants.
+
+    Args:
+        nom_fichier (str): Le nom du fichier à trier.
+
+    Returns:
+        None
+    """
+
+    # Lire les données du fichier
+    with open(nom_fichier, 'r') as fichier:
+        lignes = fichier.readlines()
+
+    # Trier les lignes selon le critère de tri
+    lignes_triees = sorted(lignes, key=lambda ligne: float(ligne.split('|')[-1]))
+
+    # Écrire les lignes triées dans le fichier
+    with open(nom_fichier, 'w') as fichier:
+        fichier.writelines(lignes_triees)
