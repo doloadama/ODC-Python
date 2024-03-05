@@ -68,7 +68,6 @@ def afficher_etudiants():
             print("{:<15} | {:<10} | {:<10} | {:<10} | {:<10} | {:<10} | {:<10} | {:<10.2}".format(prenom, nom, classe, telephone, devoir, projet, examen, moyenne))
             print("-" * 110)
 
-
 # Menu principal
 def menu():
     """
@@ -78,8 +77,8 @@ def menu():
         print("\nMenu :")
         print("1. Saisir les informations d'un étudiant")
         print("2. Afficher tous les étudiants")
-        print("3. rechercher un étudiant")
-        print("4. Rechercher un étudiant (par téléphone, nom, prénom ou classe)")
+        print("3. Rechercher un étudiant (par téléphone, nom, prénom ou classe)")
+        print("4. Trier par la moyenne")
         print("5. Modifier les notes d'un étudiant")
         print("6. Quitter")
 
@@ -101,13 +100,17 @@ def menu():
             else:
                 print("Aucun résultat trouvé pour la recherche spécifiée.")  # Message si aucun étudiant n'est trouvé
         elif choix == "4":
-            trier_par_la_moyenne("donnees_etudiant.txt")
+            trier_par_la_moyenne("donnees_etudiants.txt")
+            afficher_etudiants()
+        elif choix == "5":
+            modifier_etudiant("donnees_etudiants.txt")
             afficher_etudiants()
         elif choix == "6":
             break
         else:
             print("Choix invalide. Veuillez réessayer.")
 
+#Fonction qui se chargera de la recherche de l'étudiant à partir d'un critère
 def rechercher_etudiant_critere(critere, valeur):
     """
     Fonction pour rechercher un étudiant en fonction d'un critère spécifié.
@@ -141,6 +144,7 @@ def rechercher_etudiant_critere(critere, valeur):
     # Retourner la liste des étudiants trouvés
     return etudiants_trouves
 
+#Fonction qui affichera le résultat de la recherche
 def affichage_recherche():
     # Appel de la fonction de recherche avec les critères spécifiés
 
@@ -168,8 +172,46 @@ def trier_par_la_moyenne(nom_fichier):
         lignes = fichier.readlines()
 
     # Trier les lignes selon le critère de tri
-    lignes_triees = sorted(lignes, key=lambda ligne: float(ligne.split('|')[-1]))
+    lignes_triees = sorted(lignes, key=lambda ligne: float(ligne.split('|')[-1]), reverse=True)
 
     # Écrire les lignes triées dans le fichier
     with open(nom_fichier, 'w') as fichier:
         fichier.writelines(lignes_triees)
+
+def modifier_etudiant(nom_fichier):
+    """
+    Fonction pour acceder au fichier afin d'n modifier le contenu sur une ligne
+    Nous allons pour cela utiliser la fonction de recherche en donnant come critère le numéro de téléphone
+    """
+    #L'utilisateur devra saisir le numéro de téléphone de l'étudiant dont il veut modifier les informations
+    critere = "telephone"
+    valeur = input("Donner le numéro de téléphone de l'étudiant: ")
+    with open(nom_fichier, "r+") as fichier:
+        lignes = fichier.readlines()
+        fichier.seek(0)
+        # Parcourir chaque ligne du fichier
+        for ligne in fichier:
+            # Vérifier si la valeur du critère spécifié correspond à la valeur recherchée
+            infos = ligne.strip().split("|")
+            if critere == "telephone" and valeur == infos[3]:
+                nom = input("Nom : ")
+                prenom = input("Prénom : ")
+                classe = input("Classe: ")
+                telephone = number(input("téléphone: "))
+                devoir = input("Note de devoir : ")
+                projet = input("Note de projet : ")
+                examen = input("Note d'examen : ")
+                moyenne = round((float(devoir) + float(projet) + float(examen)) / 3)
+
+                #Ecrire les informations des étudiants
+                infos[0] = nom
+                infos[1] = prenom
+                infos[2] = classe
+                infos[3] = telephone
+                infos[4] = devoir
+                infos[5] = projet
+                infos[6] = examen
+                infos[7] = moyenne
+            # Réécrire la ligne (qu'elle ait été modifiée ou non)
+            fichier.write('|'.join(str(infos)) + '\n')
+        
