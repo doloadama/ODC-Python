@@ -7,12 +7,6 @@ def number(num):
     debutNumero = num[:2]
     return debutNumero in commence and len(num.replace(" ", "")) == 9
 
-def gestion_nom_prenom_classe(mot):
-    """
-    Fonction qui valide le nom, le prénom et la classe
-    """
-    return mot is not "" and mot is not " "
-
 #Gestion de la validation de notes
 def valider_note(note):
     """
@@ -20,63 +14,59 @@ def valider_note(note):
     """
     return note.isdigit() and 0 <= float(note) <= 20
 
+def gestion_string(mot):
+    """Fonction qui gère la saisie du nom, prénom et la classe"""
+    return mot != "" and mot !=" " and mot[0].isupper()
+    
 #Gestion de la saisie des informations des étudiants
 def saisie_etudiant():
     """
     Fonction pour saisir les informations d'un étudiant.
     """
     while True:
-        nom = (input("Nom de l'étudiant : "))
-        if gestion_nom_prenom_classe(nom):
-            break
-        else:
-            print("Veuillez saisir un nom!")
-    
-    while True:
-        prenom = (input("Nom de l'étudiant : "))
-        if gestion_nom_prenom_classe(prenom):
-            break
-        else:
-            print("Veuillez saisir un prénom!")
-        
-    while True:
-        classe = (input("Nom de l'étudiant : "))
-        if gestion_nom_prenom_classe(classe):
-            break
-        else:
-            print("Veuillez saisir une classe!")
+        nom = input("Nom de l'étudiant : ")
+        while not gestion_string(nom):
+            print("Le nom doit commencer par une majuscule et ne comporte pas d'éspaces au début")
+            nom = input("Nom de l'étudiant : ")
+  
+        prenom = input("Prénom de l'étudiant : ")
+        while not gestion_string(prenom):
+            print("Le prénom doit commencer par une majuscule et ne comporte pas d'éspaces au début")
+            prenom = input("Prénom de l'étudiant : ")
 
-    while True: 
+        classe = input("Classe de l'étudiant : ")
+        while not gestion_string(classe):
+            print("Le nom de la classe doit commencer par une majuscule et ne comporte pas d'éspaces au début")
+            classe = input("Classe de l'étudiant : ")
+
+        # Validation du numéro de téléphone
         telephone = input("Téléphone de l'étudiant : ")
-        if number(telephone) and  telephone.isdigit():
-            break
-        else:
+        while not number(telephone) or not telephone.isdigit():
             print("Format de numéro incorrect. Veuillez réessayer.")
-    while True:    
+            telephone = input("Téléphone de l'étudiant : ")
+
+        # Validation des notes
         devoir = input("Note de devoir : ")
-        if valider_note(devoir):
-            break
-        else:
+        while not valider_note(devoir):
             print("La note de devoir est incorrecte. Veuillez réessayer.")
-    while True: 
+            devoir = input("Note de devoir : ")
+
         projet = input("Note de projet : ")
-        if valider_note(projet):
-            break
-        else:
+        while not valider_note(projet):
             print("La note de projet est incorrecte. Veuillez réessayer.")
-    while True:        
+            projet = input("Note de projet : ")
+
         examen = input("Note d'examen : ")
-        if valider_note(examen):
-            break
-        else:
+        while not valider_note(examen):
             print("La note d'examen est incorrecte. Veuillez réessayer.")
-        
+            examen = input("Note d'examen : ")
+
         moyenne = round((float(devoir) + float(projet) + float(examen)) / 3)
-        
+
         # Écrire les données de l'étudiant dans le fichier
         with open("donnees_etudiants.txt", "a") as fichier:
             fichier.write(f"{prenom}|{nom}|{classe}|{telephone}|{devoir}|{projet}|{examen}|{moyenne}\n")
-        
+
         continuer = input("Voulez-vous ajouter un autre étudiant ? (O/N) : ")
         if continuer.upper() != "O":
             break
@@ -86,14 +76,16 @@ def afficher_etudiants():
     Fonction pour afficher les informations de tous les étudiants.
     """
     print("\nListe des étudiants :\n")
-    print("{:<15} | {:<10} | {:<10} | {:<10} | {:<10} | {:<10} | {:<10} | {:<10}".format("Prénom", "Nom", "Classe", "Téléphone", "Devoir", "Projet", "Examen", "Moyenne"))
-    print("-" * 110)
+    print()
+    print("-" * 109)
+    print("| {:<15} | {:<10} | {:<10} | {:<10} | {:<10} | {:<10} | {:<10} | {:<10}|".format("Prénom", "Nom", "Classe", "Téléphone", "Devoir", "Projet", "Examen", "Moyenne"))
+    print("-" * 109)
 
     with open("donnees_etudiants.txt", "r") as fichier:
         for ligne in fichier:
             prenom, nom, classe, telephone, devoir, projet, examen, moyenne = ligne.strip().split("|")
-            print("{:<15} | {:<10} | {:<10} | {:<10} | {:<10} | {:<10} | {:<10} | {:<10.2}".format(prenom, nom, classe, telephone, devoir, projet, examen, moyenne))
-            print("-" * 110)
+            print("| {:<15} | {:<10} | {:<10} | {:<10} | {:<10} | {:<10} | {:<10} | {:<10.2}|".format(prenom, nom, classe, telephone, devoir, projet, examen, moyenne))
+            print("-" * 109)
 
 # Menu principal
 def menu():
@@ -119,27 +111,22 @@ def menu():
             critere = input("Entrez le critère de recherche (téléphone, nom, prénom ou classe) : ").lower()
             valeur = input("Entrez la valeur à rechercher : ")
             # Appel de la fonction de recherche avec les critères spécifiés
-            resultats_recherche = rechercher_etudiant_critere(critere, valeur)
-            if resultats_recherche:
-                print("\nRésultats de la recherche :")
-                for etudiant in resultats_recherche:
-                    print(etudiant)  # Affichage des informations de chaque étudiant trouvé
-            else:
-                print("Aucun résultat trouvé pour la recherche spécifiée.")  # Message si aucun étudiant n'est trouvé
+            print("\nRésultats de la recherche :")
+            # Affichage des résultats de la recherche
+            rechercher_etudiant_critere("donnees_etudiants.txt", credits, valeur)
         elif choix == "4":
             print("------------------------------Résultat du tri par ordre décroissant de la moyenne----------------------------", end="\n")
             trier_etudiants_par_moyenne("donnees_etudiants.txt")
         elif choix == "5":
             modifier_etudiant("donnees_etudiants.txt")
             print("------------------------------------Listes des étudiants modifiée--------------------------------------------",end="\n")
-            afficher_etudiants()
         elif choix == "6":
             break
         else:
             print("Choix invalide. Veuillez réessayer.")
 
 #Fonction qui se chargera de la recherche de l'étudiant à partir d'un critère
-def rechercher_etudiant_critere(critere, valeur):
+def rechercher_etudiant_critere(nom_fichier, critere, valeur):
     """
     Fonction pour rechercher un étudiant en fonction d'un critère spécifié.
     
@@ -150,39 +137,32 @@ def rechercher_etudiant_critere(critere, valeur):
     Returns:
         list: Une liste contenant les informations des étudiants correspondant au critère de recherche.
     """
-    etudiants_trouves = []  # Une liste pour stocker les étudiants trouvés
-    
-    # Ouvrir le fichier contenant les données des étudiants en mode lecture
-    with open("donnees_etudiants.txt", "r") as fichier:
-        # Parcourir chaque ligne du fichier
+    # Création d'une liste pour stocker les informations des étudiants
+    etudiants_recherche = []
+    # Lecture du fichier et ajout des informations des étudiants à la liste
+    with open(nom_fichier, "r") as fichier:
         for ligne in fichier:
-            # Extraire les informations de l'étudiant de la ligne et les stocker dans des variables
             prenom, nom, classe, telephone, devoir, projet, examen, moyenne = ligne.strip().split("|")
-            # Vérifier si la valeur du critère spécifié correspond à la valeur recherchée
-            if critere == "telephone" and valeur == telephone:
-                # Si c'est le cas, ajouter les informations de l'étudiant à la liste des étudiants trouvés
-                etudiants_trouves.append((prenom, nom, classe, telephone, devoir, projet, examen, moyenne))
-            elif critere == "nom" and valeur == nom:
-                etudiants_trouves.append((prenom, nom, classe, telephone, devoir, projet, examen, moyenne))
-            elif critere == "prenom" and valeur == prenom:
-                etudiants_trouves.append((prenom, nom, classe, telephone, devoir, projet, examen, moyenne))
-            elif critere == "classe" and valeur == classe:
-                etudiants_trouves.append((prenom, nom, classe, telephone, devoir, projet, examen, moyenne))
-    
-    # Retourner la liste des étudiants trouvés
-    return etudiants_trouves
+            if critere == "telephone" and valeur in ligne:
+                etudiants_recherche.append((prenom, nom, classe, telephone, float(devoir), float(projet), float(examen), float(moyenne)))
+            elif critere == "nom" and valeur in ligne:
+                etudiants_recherche.append((prenom, nom, classe, telephone, float(devoir), float(projet), float(examen), float(moyenne)))
+            elif critere == "prenom" and valeur in ligne:
+                etudiants_recherche.append((prenom, nom, classe, telephone, float(devoir), float(projet), float(examen), float(moyenne)))
+            elif critere == "classe" and valeur in ligne:
+                etudiants_recherche.append((prenom, nom, classe, telephone, float(devoir), float(projet), float(examen), float(moyenne)))
 
-#Fonction qui affichera le résultat de la recherche
-def affichage_recherche():
-    # Appel de la fonction de recherche avec les critères spécifiés
+    # Affichage des étudiants triés
+    print("\nListe des étudiants recherchés :", end="\n")
+    print()
+    print("-"*110)
+    print(f"{'Nom':<15} | {'Prénom':<10}  | {'Classe':<10}  | {'Téléphone':<10} | {'Devoir':<10} | {'Projet':<10} | {'Examen':<10} | {'Moyenne':<10} |")
+    print("-"*110)
+    for etudiant in etudiants_recherche:
+        prenom, nom, classe, telephone, devoir, projet, examen, moyenne = etudiant
+        print(f"{nom:<15} | {prenom:<10}  | {classe:<10}  | {telephone:<10} | {devoir:<10.2f} | {projet:<10.2f} | {examen:<10.2f} | {moyenne:<10.2f} |")
+        print("-"*110)
 
-    # Affichage des résultats de la recherche
-    if rechercher_etudiant_critere():
-        print("\nRésultats de la recherche :")
-        for etudiant in rechercher_etudiant_critere:
-            print(etudiant)  # Affichage des informations de chaque étudiant trouvé
-    else:
-        print("Aucun résultat trouvé pour la recherche spécifiée.")  # Message si aucun étudiant n'est trouvé
 
 def trier_etudiants_par_moyenne(nom_fichier):
     # Création d'une liste pour stocker les informations des étudiants
@@ -202,13 +182,16 @@ def trier_etudiants_par_moyenne(nom_fichier):
 
     # Affichage des étudiants triés
     print("\nListe des étudiants triée par moyenne décroissante :", end="\n")
-    print(f"{'Nom':<15} | {'Prénom':<10} | {'Classe':<10} | {'Téléphone':<10} | {'Devoir':<10} | {'Projet':<10} | {'Examen':<10} | {'Moyenne':<10} |")
+    print()
+    print("-"*110)
+    print(f"{'Nom':<15} | {'Prénom':<10}  | {'Classe':<10}  | {'Téléphone':<10} | {'Devoir':<10} | {'Projet':<10} | {'Examen':<10} | {'Moyenne':<10} |")
+    print("-"*110)
     for etudiant in etudiants_tries:
         prenom, nom, classe, telephone, devoir, projet, examen, moyenne = etudiant
-        print(f"{nom:<15} {prenom:<10} {classe:<10} {telephone:<10} {devoir:<10.2f} {projet:<10.2f} {examen:<10.2f} {moyenne:<10.2f}")
+        print(f"{nom:<15} | {prenom:<10}  | {classe:<10}  | {telephone:<10} | {devoir:<10.2f} | {projet:<10.2f} | {examen:<10.2f} | {moyenne:<10.2f} |")
+        print("-"*110)
 
-
-#
+#Fonction pour modifier
 def modifier_etudiant(nom_fichier):
     """
     Fonction pour accéder au fichier afin de modifier le contenu sur une ligne.
@@ -253,4 +236,6 @@ def modifier_etudiant(nom_fichier):
                 infos[7] = str(moyenne)
 
                 # Réécrire la ligne dans le fichier
-                fichier.writelines('|'.join(infos) + '\n')
+                fichier.writelines('|'.join(str(infos)) + '\n')
+            else:
+                print("La référence n'existe pas")

@@ -47,7 +47,7 @@ def lettrem(phrase):
             code += caracteres[carac]
         else:
             code = "0"
-        
+    
         if code == succession:
             traduction += "0" + code
         else:
