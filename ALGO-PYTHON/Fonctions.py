@@ -19,12 +19,11 @@ def saisie_etudiant():
     """
     Fonction pour saisir les informations d'un étudiant.
     """
-    while True:
-        nom = input("Nom de l'étudiant : ")
-        prenom = input("Prénom de l'étudiant : ")
-        classe = input("Classe de l'étudiant : ")
-        telephone = input("Téléphone de l'étudiant : ")
-        
+    nom = input("Nom de l'étudiant : ")
+    prenom = input("Prénom de l'étudiant : ")
+    classe = input("Classe de l'étudiant : ")
+    telephone = input("Téléphone de l'étudiant : ")
+    while True: 
         if not number(telephone) and not telephone.isdigit():
             print("Format de numéro incorrect. Veuillez réessayer.")
             continue
