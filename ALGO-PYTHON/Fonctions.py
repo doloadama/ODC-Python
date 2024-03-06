@@ -100,10 +100,11 @@ def menu():
             else:
                 print("Aucun résultat trouvé pour la recherche spécifiée.")  # Message si aucun étudiant n'est trouvé
         elif choix == "4":
-            trier_par_la_moyenne("donnees_etudiants.txt")
-            afficher_etudiants()
+            print("------------------------------Résultat du tri par ordre décroissant de la moyenne----------------------------", end="\n")
+            trier_etudiants_par_moyenne("donnees_etudiants.txt")
         elif choix == "5":
             modifier_etudiant("donnees_etudiants.txt")
+            print("------------------------------------Listes des étudiants modifiée--------------------------------------------",end="\n")
             afficher_etudiants()
         elif choix == "6":
             break
@@ -156,54 +157,65 @@ def affichage_recherche():
     else:
         print("Aucun résultat trouvé pour la recherche spécifiée.")  # Message si aucun étudiant n'est trouvé
 
-def trier_par_la_moyenne(nom_fichier):
-    """
-    Fonction pour trier les lignes d'un fichier selon la moyenne des étudiants.
+def trier_etudiants_par_moyenne(nom_fichier):
+    # Création d'une liste pour stocker les informations des étudiants
+    etudiants_tries = []
 
-    Args:
-        nom_fichier (str): Le nom du fichier à trier.
+    # Lecture du fichier et ajout des informations des étudiants à la liste
+    with open(nom_fichier, "r") as fichier:
+        for ligne in fichier:
+            prenom, nom, classe, telephone, devoir, projet, examen, moyenne = ligne.strip().split("|")
+            etudiants_tries.append((prenom, nom, classe, telephone, float(devoir), float(projet), float(examen), float(moyenne)))
 
-    Returns:
-        None
-    """
+    # Tri des étudiants par moyenne décroissante
+    for i in range(len(etudiants_tries)):
+        for j in range(i+1, len(etudiants_tries)):
+            if etudiants_tries[i][-1] < etudiants_tries[j][-1]:  # Comparaison des moyennes
+                etudiants_tries[i], etudiants_tries[j] = etudiants_tries[j], etudiants_tries[i]  # Échange des étudiants
 
-    # Lire les données du fichier
-    with open(nom_fichier, 'r') as fichier:
-        lignes = fichier.readlines()
+    # Affichage des étudiants triés
+    print("\nListe des étudiants triée par moyenne décroissante :", end="\n")
+    print(f"{'Nom':<15} | {'Prénom':<10} | {'Classe':<10} | {'Téléphone':<10} | {'Devoir':<10} | {'Projet':<10} | {'Examen':<10} | {'Moyenne':<10} |")
+    for etudiant in etudiants_tries:
+        prenom, nom, classe, telephone, devoir, projet, examen, moyenne = etudiant
+        print(f"{nom:<15} {prenom:<10} {classe:<10} {telephone:<10} {devoir:<10.2f} {projet:<10.2f} {examen:<10.2f} {moyenne:<10.2f}")
 
-    # Trier les lignes selon le critère de tri
-    lignes_triees = sorted(lignes, key=lambda ligne: float(ligne.split('|')[-1]), reverse=True)
 
-    # Écrire les lignes triées dans le fichier
-    with open(nom_fichier, 'w') as fichier:
-        fichier.writelines(lignes_triees)
-
+#
 def modifier_etudiant(nom_fichier):
     """
-    Fonction pour acceder au fichier afin d'n modifier le contenu sur une ligne
-    Nous allons pour cela utiliser la fonction de recherche en donnant come critère le numéro de téléphone
+    Fonction pour accéder au fichier afin de modifier le contenu sur une ligne.
+    Nous allons pour cela utiliser la fonction de recherche en donnant comme critère le numéro de téléphone.
     """
-    #L'utilisateur devra saisir le numéro de téléphone de l'étudiant dont il veut modifier les informations
+    # L'utilisateur devra saisir le numéro de téléphone de l'étudiant dont il veut modifier les informations.
     critere = "telephone"
     valeur = input("Donner le numéro de téléphone de l'étudiant: ")
     with open(nom_fichier, "r+") as fichier:
         lignes = fichier.readlines()
         fichier.seek(0)
         # Parcourir chaque ligne du fichier
-        for ligne in fichier:
+        for ligne in lignes:
             # Vérifier si la valeur du critère spécifié correspond à la valeur recherchée
             infos = ligne.strip().split("|")
             if critere == "telephone" and valeur == infos[3]:
                 nom = input("Nom : ")
                 prenom = input("Prénom : ")
-                classe = input("Classe: ")
-                telephone = number(input("téléphone: "))
-                devoir = input("Note de devoir : ")
-                projet = input("Note de projet : ")
-                examen = input("Note d'examen : ")
-                moyenne = round((float(devoir) + float(projet) + float(examen)) / 3)
+                classe = input("Classe : ")
+                
+                # Vérifier que le numéro de téléphone est correct avant d'appeler la fonction number.
+                telephone_valide = False
+                while not telephone_valide:
+                    telephone = input("Téléphone : ")
+                    telephone_valide = number(telephone)
+                    if not telephone_valide:
+                        print("Numéro de téléphone incorrect. Veuillez réessayer.")
+                
+                devoir = valider_note(input("Note de devoir : "))
+                projet = valider_note(input("Note de projet : "))
+                examen = valider_note(input("Note d'examen : "))
+                moyenne = round((float(devoir) + float(projet) + float(examen)) / 3, 2)
 
-                #Ecrire les informations des étudiants
+                # Écrire les nouvelles informations des étudiants
                 infos[0] = nom
                 infos[1] = prenom
                 infos[2] = classe
@@ -211,7 +223,7 @@ def modifier_etudiant(nom_fichier):
                 infos[4] = devoir
                 infos[5] = projet
                 infos[6] = examen
-                infos[7] = moyenne
-            # Réécrire la ligne (qu'elle ait été modifiée ou non)
-            fichier.write('|'.join(str(infos)) + '\n')
-        
+                infos[7] = str(moyenne)
+
+                # Réécrire la ligne dans le fichier
+                fichier.writelines('|'.join(infos) + '\n')
