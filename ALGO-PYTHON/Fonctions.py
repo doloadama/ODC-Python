@@ -11,7 +11,7 @@ def gestion_nom_prenom_classe(mot):
     """
     Fonction qui valide le nom, le prénom et la classe
     """
-    return mot is not None
+    return mot is not "" and mot is not " "
 
 #Gestion de la validation de notes
 def valider_note(note):
