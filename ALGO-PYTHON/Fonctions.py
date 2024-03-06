@@ -7,6 +7,12 @@ def number(num):
     debutNumero = num[:2]
     return debutNumero in commence and len(num.replace(" ", "")) == 9
 
+def gestion_nom_prenom_classe(mot):
+    """
+    Fonction qui valide le nom, le prénom et la classe
+    """
+    return mot is not None
+
 #Gestion de la validation de notes
 def valider_note(note):
     """
@@ -19,29 +25,51 @@ def saisie_etudiant():
     """
     Fonction pour saisir les informations d'un étudiant.
     """
-    nom = input("Nom de l'étudiant : ")
-    prenom = input("Prénom de l'étudiant : ")
-    classe = input("Classe de l'étudiant : ")
-    telephone = input("Téléphone de l'étudiant : ")
+    while True:
+        nom = (input("Nom de l'étudiant : "))
+        if gestion_nom_prenom_classe(nom):
+            break
+        else:
+            print("Veuillez saisir un nom!")
+    
+    while True:
+        prenom = (input("Nom de l'étudiant : "))
+        if gestion_nom_prenom_classe(prenom):
+            break
+        else:
+            print("Veuillez saisir un prénom!")
+        
+    while True:
+        classe = (input("Nom de l'étudiant : "))
+        if gestion_nom_prenom_classe(classe):
+            break
+        else:
+            print("Veuillez saisir une classe!")
+
     while True: 
-        if not number(telephone) and not telephone.isdigit():
+        telephone = input("Téléphone de l'étudiant : ")
+        if number(telephone) and  telephone.isdigit():
+            break
+        else:
             print("Format de numéro incorrect. Veuillez réessayer.")
-            continue
-        
+    while True:    
         devoir = input("Note de devoir : ")
-        if not valider_note(devoir):
+        if valider_note(devoir):
+            break
+        else:
             print("La note de devoir est incorrecte. Veuillez réessayer.")
-            continue
-        
+    while True: 
         projet = input("Note de projet : ")
-        if not valider_note(projet):
+        if valider_note(projet):
+            break
+        else:
             print("La note de projet est incorrecte. Veuillez réessayer.")
-            continue
-        
+    while True:        
         examen = input("Note d'examen : ")
-        if not valider_note(examen):
+        if valider_note(examen):
+            break
+        else:
             print("La note d'examen est incorrecte. Veuillez réessayer.")
-            continue
         
         moyenne = round((float(devoir) + float(projet) + float(examen)) / 3)
         
