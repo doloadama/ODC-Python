@@ -17,7 +17,7 @@ def lettrem(phrase):
     "6": "M", "66": "N", "666": "O", "7": "P",
     "77": "Q", "777": "R", "7777": "S", "8": "T",
     "88": "U", "888": "V", "9": "W", "99": "X",
-    "999": "Y", "9999": "Z", "0": " "
+    "999": "Y", "9999": "Z", "00": " "
 }
 
     #Dictionnaires contenant les références numériques
@@ -46,7 +46,7 @@ def lettrem(phrase):
         elif carac in caracteres:
             code += caracteres[carac]
         else:
-            code = "0"
+            code = ""
     
         if code == succession:
             traduction += "0" + code

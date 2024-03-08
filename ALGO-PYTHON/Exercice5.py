@@ -65,12 +65,17 @@ for i in range(ordre):
 
 """Récupération des éléments suivants le premier élement sur
  la même ligne de la diagonale principale"""
-suivants = [matrice[0][i+1] for i in range(ordre-1)]
-
+suivants = []
+for i in range(0, ordre):
+    for j in range(i+1, ordre):
+        suivants.append(matrice[i][j])
 
 """Récupération des éléments précedants dernier élement sur
  la même ligne de la diagonale principale"""
-precedants = [matrice[ordre-1][i] for i in range(ordre - 2, -1, -1)]
+precedants = []
+for i in range(0, ordre):
+    for i in range(ordre - 2, -1, -1):
+        precedants.append(matrice[ordre-1][i])
 
 
 #Gestion de la coloration

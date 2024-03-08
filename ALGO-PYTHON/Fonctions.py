@@ -126,8 +126,8 @@ def menu():
             print("Choix invalide. Veuillez réessayer.")
 
 #Fonction qui se chargera de la recherche de l'étudiant à partir d'un critère
-def rechercher_etudiant_critere(nom_fichier, critere, valeur):
-    """
+"""def rechercher_etudiant_critere(nom_fichier, critere, valeur):
+    
     Fonction pour rechercher un étudiant en fonction d'un critère spécifié.
     
     Args:
@@ -136,32 +136,13 @@ def rechercher_etudiant_critere(nom_fichier, critere, valeur):
         
     Returns:
         list: Une liste contenant les informations des étudiants correspondant au critère de recherche.
-    """
+    
     # Création d'une liste pour stocker les informations des étudiants
     etudiants_recherche = []
     # Lecture du fichier et ajout des informations des étudiants à la liste
     with open(nom_fichier, "r") as fichier:
         for ligne in fichier:
-            prenom, nom, classe, telephone, devoir, projet, examen, moyenne = ligne.strip().split("|")
-            if critere == "telephone" and valeur in ligne:
-                etudiants_recherche.append((prenom, nom, classe, telephone, float(devoir), float(projet), float(examen), float(moyenne)))
-            elif critere == "nom" and valeur in ligne:
-                etudiants_recherche.append((prenom, nom, classe, telephone, float(devoir), float(projet), float(examen), float(moyenne)))
-            elif critere == "prenom" and valeur in ligne:
-                etudiants_recherche.append((prenom, nom, classe, telephone, float(devoir), float(projet), float(examen), float(moyenne)))
-            elif critere == "classe" and valeur in ligne:
-                etudiants_recherche.append((prenom, nom, classe, telephone, float(devoir), float(projet), float(examen), float(moyenne)))
-
-    # Affichage des étudiants triés
-    print("\nListe des étudiants recherchés :", end="\n")
-    print()
-    print("-"*110)
-    print(f"{'Nom':<15} | {'Prénom':<10}  | {'Classe':<10}  | {'Téléphone':<10} | {'Devoir':<10} | {'Projet':<10} | {'Examen':<10} | {'Moyenne':<10} |")
-    print("-"*110)
-    for etudiant in etudiants_recherche:
-        prenom, nom, classe, telephone, devoir, projet, examen, moyenne = etudiant
-        print(f"{nom:<15} | {prenom:<10}  | {classe:<10}  | {telephone:<10} | {devoir:<10.2f} | {projet:<10.2f} | {examen:<10.2f} | {moyenne:<10.2f} |")
-        print("-"*110)
+            if critere =="""
 
 
 def trier_etudiants_par_moyenne(nom_fichier):
