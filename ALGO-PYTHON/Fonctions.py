@@ -144,7 +144,6 @@ def menu():
         for ligne in fichier:
             if critere =="""
 
-
 def trier_etudiants_par_moyenne(nom_fichier):
     # Création d'une liste pour stocker les informations des étudiants
     etudiants_tries = []
