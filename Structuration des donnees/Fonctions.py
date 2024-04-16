@@ -25,12 +25,26 @@ def csv_to_json(csv_file):
     # Write the JSON file
     with open(json_file, 'w') as jsonfile:
         json.dump(data, jsonfile, indent=4)
-def json_to_csv(json_file, csv_file):
+def json_to_csv(json_file):
     """
         Fonction pour convertir un fichier JSON en un fichier CSV
         csv_file: le chemin du fichier CSV
         json_file: le chemin du fichier JSON
     """
+
+    while True:
+        csv_file = input("Donner le nom que vous voulez donner au fichier CSV sous le format nom.csv: ")
+        if csv_file.endswith('.csv'):
+            break
+        else:
+            print("Veuillez ajouter l'extension .csv au nom de votre fichier CSV")
+
+    while True:
+        yaml_file = input("Donner le nom que vous voulez donner au fichier YAML sous le format nom.yaml: ")
+        if yaml_file.endswith('.yaml'):
+            break
+        else:
+            print("Veuillez ajouter l'extension .YAML au nom de votre fichier YAML")
 
     with open(json_file, 'r') as json_file:
         data = json.load(json_file)
@@ -47,13 +61,20 @@ def json_to_csv(json_file, csv_file):
             csv_writer.writerow(element)
 
 
-def csv_to_yaml(csv_file, yaml_file):
+def csv_to_yaml(csv_file):
     """
     Fonction pour convertir un fichier CSV en un fichier YAML
 
     csv_file: le chemin du fichier CSV
     yaml_file: le chemin du fichier YAML
     """
+    while True:
+        yaml_file = input("Donner le nom que vous voulez donner au fichier YAML sous le format nom.yaml: ")
+        if yaml_file.endswith('.yaml'):
+            break
+        else:
+            print("Veuillez ajouter l'extension .YAML au nom de votre fichier YAML")
+
     dict_list = []
     # Ouverture du fichier csv en lecture
     with open(csv_file, 'r') as csvfile:
@@ -73,7 +94,12 @@ def csv_to_xml(csv_file):
         xml_file: le chemin du fichier XML
     """
 
-    xml_file=input("Donner le nom que vous voulez donner au fichier XML: ")
+    while True:
+        xml_file = input("Donner le nom que vous voulez donner au fichier XML sous le format nom.xml: ")
+        if xml_file.endswith('.xml'):
+            break
+        else:
+            print("Veuillez ajouter l'extension .xml au nom de votre fichier XML")
 
     #Creer un element root
     root = ET.Element('root')
@@ -106,4 +132,4 @@ def csv_to_xml(csv_file):
 
     # Ecriture du fichier XML
     tree = ET.ElementTree(root)
-    tree.write(xml_file+".xml")
+    tree.write(xml_file)
